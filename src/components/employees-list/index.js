@@ -2,12 +2,12 @@ import styles from './style.module.scss';
 
 import EmployeesListItem from '../employees-list-item';
 
-const EmployeesList = () => {
+const EmployeesList = ({ data }) => {
     return (
         <ul className={`${styles.app_list} list-group`}>
-            <EmployeesListItem />
-            <EmployeesListItem />
-            <EmployeesListItem />
+            {data.map((item, index) => (
+                <EmployeesListItem key={index} {...item} />
+            ))}
         </ul>
     );
 };
