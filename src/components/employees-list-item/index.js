@@ -1,28 +1,7 @@
-import { Component } from 'react';
 import './style.scss';
 
-class EmployeesListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rise: false,
-            increase: false,
-        };
-    }
-    onHandleIncrease = () => {
-        this.setState(({ increase }) => ({
-            increase: !increase,
-        }));
-    };
-    onHandleRise = () => {
-        this.setState(({ rise }) => ({
-            rise: !rise,
-        }));
-    };
-    render() {
-        const { name, salary, deleteItem } = this.props;
-        const { increase } = this.state;
-        const { rise } = this.state;
+const EmployeesListItem = (props) => {
+        const { name, salary, deleteItem, increase, rise, onToggleProp} = props;
         const riseEmpoyee = rise ? 'like' : '';
         const listClassName = increase
             ? `list-group-item d-flex justify-content-between increase ${riseEmpoyee}`
@@ -31,7 +10,8 @@ class EmployeesListItem extends Component {
             <li className={listClassName}>
                 <span
                     className='list-group-item-label'
-                    onClick={this.onHandleRise}
+                    onClick={onToggleProp}
+                    data-toggle="increase"
                 >
                     {name}
                 </span>
@@ -44,7 +24,8 @@ class EmployeesListItem extends Component {
                     <button type='button' className='btn-cookie btn-sm'>
                         <i
                             className='fas fa-cookie'
-                            onClick={this.onHandleIncrease}
+                            onClick={onToggleProp}
+                            data-toggle="rise"
                         ></i>
                     </button>
 
@@ -55,7 +36,6 @@ class EmployeesListItem extends Component {
                 </div>
             </li>
         );
-    }
 }
 
 export default EmployeesListItem;

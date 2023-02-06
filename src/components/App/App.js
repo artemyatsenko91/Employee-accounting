@@ -12,9 +12,27 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                { name: 'Artem Y.', salary: 700, increase: false, id: 1 },
-                { name: 'Elena Y.', salary: 400, increase: true, id: 2 },
-                { name: 'Sonya Y.', salary: 1000, increase: false, id: 3 },
+                {
+                    name: 'Artem Y.',
+                    salary: 700,
+                    increase: false,
+                    rise: false,
+                    id: 1,
+                },
+                {
+                    name: 'Elena Y.',
+                    salary: 400,
+                    increase: true,
+                    rise: false,
+                    id: 2,
+                },
+                {
+                    name: 'Sonya Y.',
+                    salary: 1000,
+                    increase: false,
+                    rise: false,
+                    id: 3,
+                },
             ],
         };
         this.maxId = 4;
@@ -42,15 +60,30 @@ class App extends Component {
             };
         });
     };
+    onToggleProp = (id, prop) => {
+        this.setState(({ data }) => ({
+            data: data.map((item) => {
+                if (item.id === id) {
+                    return { ...item, [prop]: !item[prop] };
+                }
+                return item;
+            }),
+        }));
+    };
 
     render() {
+        const countEmp = this.state.data.length;
+        const countIncrease = this.state.data.filter(
+            (item) => item.increase === true
+        ).length;
         return (
             <div className='app'>
-                <AppInfo />
+                <AppInfo countEmp={countEmp} countIncrease={countIncrease} />
                 <SearchPanel />
                 <EmployeesList
                     data={this.state.data}
                     deleteItem={this.deleteItem}
+                    onToggleProp={this.onToggleProp}
                 />
                 <EmployeesAddForm onAdd={this.addItem} />
             </div>
